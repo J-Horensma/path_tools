@@ -1,2 +1,4 @@
 # path_tools
-**"path_tools.py"**, is a library, with path related functions.
+**"path_tools.py"**, is a Python library, including, the following path-related functions:
+
+1.) WILL UPDATE
