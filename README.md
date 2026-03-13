@@ -14,7 +14,7 @@ if the path contains a space, then returns the unquoted path, to the "filter_pat
 **4.)** Converts any dot-sequences, in the path, using the "pathlib" module\
 **5.)** Returns a filtered and converted path
 
-### **Example:**
+### **Examples:**
 ![Alt text](Images/filter_path_appropriated_quotes.png)\
 ![Alt text](Images/filter_path_converted_OS-specific_variables.png)
 
