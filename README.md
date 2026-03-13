@@ -4,8 +4,8 @@ that includes advanced path filtering functions, as well as,\
 a "recursive_copy_with_progress()" function,
 that displays a progress bar and an ETA, while recursively copying files.
 
-# **The "recursive_copy_with_progress()" Function:**
-### **Syntax:** 
+## **The "recursive_copy_with_progress()" Function:**
+#### **Syntax:** 
 recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH)
 
 ## **Example:**
