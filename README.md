@@ -14,6 +14,5 @@ to the destination path, while displaying a live progress bar and an ETA, until 
 **5.)** All of the above, can be done with a single "recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH)" function call, after importing the "path_tools" library
 
 ### **Example**, 
-#### using the **"path_tools"** library and the included test file 
-### **"recursive_copy_with_progress.py"**:
+#### using the **"path_tools"** library and the included test file ### **"recursive_copy_with_progress.py"**:
 ![Alt text](Images/recursive_copy_with_progress.png)
