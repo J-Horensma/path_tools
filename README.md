@@ -8,9 +8,9 @@ that displays a progress bar and an ETA, while recursively copying files.
 ### **Syntax:** 
 #### recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH)
 ### **Description:**
-Displays the total number of files and bytes to be copied,
+This function, calculates and displays the total number of files and bytes to be copied,
 then recursively copies all files and folders, within a chosen folder path,
-while displaying a progress bar and an ETA
+while displaying a progress bar and an ETA.
 
 ### **Example:**
 ![Alt text](Images/recursive_copy_with_progress.png)
