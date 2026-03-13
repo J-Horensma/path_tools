@@ -6,7 +6,7 @@ the "recursive_copy_with_progress()" function, that displays a progress bar and 
 ### **Syntax:** 
 #### recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH)
 ### **Description:**
-**1.)** Filters and replaces characters, in the source path or destination path, OS-appropriately, with the help of the "os" and "pathlib" modules\
+**1.)** Filters and replaces characters, OS variables, and dot-sequences, in the source path or destination path, OS-appropriately, with the help of the "os" and "pathlib" modules\
 **2.)** Calculates and displays the total number of files and bytes to be copied, from the source path\
 **3.)** Creates a new directory, in the destination path, matching the source path's folder name, if it already exists in the destination path,\
 a new directory, with a new name, is created, to copy the files to\
