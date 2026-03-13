@@ -10,7 +10,7 @@ the "recursive_copy_with_progress()" function, that displays a progress bar and 
 **2.)** Calculates and displays the total number of files and bytes to be copied, from the SOURCE_PATH variable, using path_tools' built-in recursive_files_and_bytes_total() function\
 **3.)** Creates a new directory, in the destination path, matching the source path's folder name, if it does not already exists in the destination path,\
 if it does, a new directory, with a new name, is created to copy the files to\
-**4.)** Recursively copies all files and folders within the chosen source path, while displaying a live progress bar and an ETA, until finished
+**4.)** Recursively copies all files and folders within the chosen source path, with the help, of shutil, while displaying a live progress bar and an ETA, until finished
 
 ### **Example:**
 ![Alt text](Images/recursive_copy_with_progress.png)
