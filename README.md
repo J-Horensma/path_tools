@@ -14,6 +14,9 @@ if the path contains a space, then returns the unquoted path, to the "filter_pat
 **4.)** Converts any dot-sequences, in the path, using the "pathlib" module
 **5.)** Returns a filtered and converted path
 
+### **Example:**
+![Alt text](Images/filter_path.png)
+
 ## **The "recursive_copy_with_progress()" Function:**
 ### **Syntax:** 
 #### recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH)
