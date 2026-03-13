@@ -10,3 +10,9 @@ that displays a progress bar and an ETA, while recursively copying files.
 
 ### **Example:**
 ![Alt text](Images/recursive_copy_with_progress.png)
+
+## **The "appropriate_quotes()" Function:**
+### **Syntax:** 
+#### appropriate_quotes(PATH)
+
+### **Example:**
