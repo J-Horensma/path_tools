@@ -176,7 +176,7 @@ def recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH):
         FILTERED_DESTINATION_PATH = filter_path(DESTINATION_PATH)
         if os.path.exists(FILTERED_SOURCE_PATH) and os.path.exists(FILTERED_DESTINATION_PATH):
             TOTAL_FILES, TOTAL_BYTES = recursive_files_and_bytes_total(FILTERED_SOURCE_PATH)
-            print(f'Copying a total of: {convert_bytes(TOTAL_BYTES)} and {TOTAL_FILES} files')
+            print(f'Copying a total of: {TOTAL_FILES} files and {convert_bytes(TOTAL_BYTES)}, of data')
             COPIED_FILES = int(0)
             COPIED_BYTES = int(0)
             if os.path.isdir(FILTERED_SOURCE_PATH) and os.path.isdir(FILTERED_DESTINATION_PATH):
@@ -221,4 +221,5 @@ def recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH):
         else:
             raise FileNotFoundError(f'recursive_copy_with_progress():\nOne or more supplied paths, were not found')
     else:
+
         raise EOFError('recursive_copy_with_progress():\nOne or more empty variables, were supplied')
