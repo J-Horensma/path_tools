@@ -12,7 +12,7 @@ is returned to the "filter_path()" function, if the path does not contain a spac
 if the path contains a space, then returns the unquoted path, to the "filter_path()" function\
 **3.)** Converts any OS-specific variables, in the path, using the "os" module\
 **4.)** Converts any dot-sequences, in the path, using the "pathlib" module\
-**5.)** Returns a filtered and converted path
+**5.)** Returns a filtered and converted path (See the test file: "filter_path.py", in the Tests folder)
 
 ### **Examples:**
 ![Alt text](Images/filter_path_appropriated_quotes_1.png)\
