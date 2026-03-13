@@ -11,7 +11,7 @@ the "recursive_copy_with_progress()" function, that displays a progress bar and 
 **3.)** Creates a new directory, in the destination path, matching the source path's folder name, using the "os" module, if the folder does not already exists in the destination path, if it does exist, in the destination path, a new directory, with a new name, is created, in the destination path\
 **4.)** Recursively copies all files and folders within the chosen source path, to the destination path, with the source path folder's or new folder's name appended,\
 to the destination path, while displaying a live progress bar and an ETA, until finished, with path_tools' built-in "recursive_copy_progress_bar()", "convert_seconds()" functions, and the help of the, "sys", "shutil", and "time" modules\
-**5.)** All of the above, can be done with a single "recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH)" function call, after importing the "path_tools" library
+**5.)** All of the above, can be done with a single "recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH)" function call, after importing the "path_tools" library (See test file "recursive_copy_with_progress.py", in the Tests folder)
 
 ### **Example**, using the included **"path_tools"** library and the included test file **"recursive_copy_with_progress.py"**, in the **"Tests"** folder:
 ![Alt text](Images/recursive_copy_with_progress.png)
