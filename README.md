@@ -6,8 +6,8 @@
 #### filter_path(PATH)
 ### **Description:**
 **1.)** Uses path_tools' built-in "appropriate_quotes()" function, to remove any prepended quotes and matching quotes, at the end of the supplied path (If present), then replace any OS-inappropriate quotes, in the path, with the OS-appropriate quotes, then the "appropriate_quotes()" function,
-checks if the path contains a space, if so, the OS-appropriate quotes are added, to the beginning and end of the path and the OS-appropriately quoted path,\
-is returned to the "filter_path()" function, if not, the "appropriate_quotes()" function returns a path, with any unneccessary quotes removed
+checks if the path contains a space, if so, the OS-appropriate quotes are added, to the beginning and end of the path\ 
+and the OS-appropriately quoted path, is returned to the "filter_path()" function, if not, the "appropriate_quotes()" function returns a path, with any OS-inappropriate quotes removed or replaced
 
 ## **The "recursive_copy_with_progress()" Function:**
 ### **Syntax:** 
