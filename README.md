@@ -7,10 +7,12 @@
 ### **Description:**
 **1.)** Uses path_tools' built-in "appropriate_quotes()" function, to remove any prepended quotes and matching quotes, at the end of the supplied path (If present), then replace any OS-inappropriate quotes, in the path, with the OS-appropriate quotes (Also, if present), then the "appropriate_quotes()" function,
 checks if the path contains a space, if it does, the OS-appropriate quotes are added, to the beginning and end of the path, and the OS-appropriately quoted path,
-is returned to the "filter_path()" function, if the path does not contain a space, the "appropriate_quotes()" function returns a path, with any quotes removed, that are not part of the path and replaced, when they are part of the path, but are OS-inappropriate quotes\
+is returned to the "filter_path()" function, if the path does not contain a space, the "appropriate_quotes()" function returns a path, to the "filter_path()" function, with any quotes removed, that are not part of the path and replaced, when they are part of the path, but are OS-inappropriate quotes\
 **2.)** Uses path_tools' built-in "unquote_path()" function, to remove the beginning and end quotes, added by the "appropriate_quotes()" function,
-if the path contains a space\
-**3.)**
+if the path contains a space, then returns the unquoted path, to the "filter_path()" function\
+**3.)** Converts any OS-specific variables, in the path, using the "os" module
+**4.)** Converts any dot-sequences, in the path, using the "pathlib" module
+**5.)**
 
 ## **The "recursive_copy_with_progress()" Function:**
 ### **Syntax:** 
