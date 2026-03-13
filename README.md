@@ -13,5 +13,5 @@ the "recursive_copy_with_progress()" function, that displays a progress bar and 
 to the destination path, while displaying a live progress bar and an ETA, until finished, with path_tools' built-in "recursive_copy_progress_bar()", "convert_seconds()" functions, and the help of the, "sys", "shutil", and "time" modules\
 **5.)** All of the above, can be done with a single "recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH)" function call, after importing the "path_tools" library (See test file "recursive_copy_with_progress.py", in the Tests folder)
 
-### **Example**, using the included **"path_tools"** library and the included test file **"recursive_copy_with_progress.py"**, in the **"Tests"** folder:
+### **Example:**
 ![Alt text](Images/recursive_copy_with_progress.png)
