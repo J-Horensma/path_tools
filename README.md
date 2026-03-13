@@ -16,6 +16,7 @@ if the path contains a space, then returns the unquoted path, to the "filter_pat
 
 ### **Example:**
 ![Alt text](Images/filter_path_appropriated_quotes.png)
+![Alt text](Images/filter_path_converted_OS-specific_variables.png)
 
 ## **The "recursive_copy_with_progress()" Function:**
 ### **Syntax:** 
