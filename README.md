@@ -6,5 +6,5 @@ that displays a progress bar and an ETA, while recursively copying files.
 
 **Syntax:** recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH)
 
-## **Example:**
+### **Example:**
 ![Alt text](Images/recursive_copy_with_progress.png)
