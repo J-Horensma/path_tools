@@ -1,6 +1,5 @@
 # path_tools
-**The "path_tools" library**, is a multi-OS Python library, that includes advanced path filtering functions and\
-the "recursive_copy_with_progress()" function, that displays a progress bar and an ETA, while recursively copying files.
+**The "path_tools" library**, is a multi-OS Python library, that includes advanced path-related functions.
 
 ## **The "recursive_copy_with_progress()" Function:**
 ### **Syntax:** 
