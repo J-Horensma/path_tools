@@ -15,7 +15,8 @@ if the path contains a space, then returns the unquoted path, to the "filter_pat
 **5.)** Returns a filtered and converted path
 
 ### **Examples:**
-![Alt text](Images/filter_path_appropriated_quotes.png)\
+![Alt text](Images/filter_path_appropriated_quotes_1.png)\
+![Alt text](Images/filter_path_appropriated_quotes_2.png)\
 ![Alt text](Images/filter_path_converted_OS-specific_variables.png)\
 ![Alt text](Images/filter_path_dot-sequences_converted.png)
 
