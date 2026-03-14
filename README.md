@@ -25,6 +25,9 @@ if the path contains a space, then returns the unquoted path, to the "filter_pat
 ### **Syntax:** 
 #### recursive_files_and_bytes_total(PATH)
 ### **Description:**
+**1.)** Filters the supplied PATH variable, using path_tools' built-in "filter_path()" function
+**2.)** Recursively scans, for the total number of files and bytes of data, using the "os" module
+**3.)** Returns the total number of files and the total number of bytes, of data ()
 
 ## **The "recursive_copy_with_progress()" Function:**
 ### **Syntax:** 
