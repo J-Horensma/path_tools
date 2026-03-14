@@ -3,7 +3,7 @@
 
 ## **The "is_safely_quoted()" Function:**
 ### **Syntax:** 
-#### is_safely_quoted()
+#### is_safely_quoted(PATH)
 ### **Description:**
 **1.)** Checks if the supplied path, is OS-appropriately quoted and has no extra quotes\
 **2.)** Returns True, if the supplied path is appropriately quoted (Or appropriately not), otherwise False
