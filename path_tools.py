@@ -2,8 +2,7 @@ import os, shutil, sys, platform, time
 from pathlib import Path
 
 #RETURNS "True", IF THE SUPPLIED PATH,
-#IF THE SUPPLIED PATH, IS OS-APPROPRIATELY QUOTED
-#OTHERWISE, "False"
+#IS OS-APPROPRIATELY AND CORRECTLY QUOTED, OTHERWISE, "False"
 def is_safely_quoted(PATH):
     STRIPPED = str(PATH).strip()
     if STRIPPED and isinstance(STRIPPED, str):
