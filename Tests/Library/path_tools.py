@@ -218,4 +218,3 @@ def recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH):
             raise FileNotFoundError(f'recursive_copy_with_progress():\nOne or more supplied paths, were not found')
     else:
         raise EOFError('recursive_copy_with_progress():\nOne or more empty variables, were supplied')
-
