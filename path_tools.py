@@ -22,7 +22,7 @@ def is_safely_quoted(PATH):
     else:
         raise TypeError('is_safely_quoted():\nThe PATH variable, must be a string and cannot be empty')
 
-#OS-APPROPRIATELY, QUOTES A SUPPLIED PATH
+#OS-APPROPRIATELY, QUOTES A SUPPLIED PATH (IF A SPACE, IS PRESENT)
 #AND FIXES INCORRECT QUOTING
 def appropriate_quotes(PATH):
     STRIPPED = str(PATH).strip()
@@ -47,7 +47,7 @@ def appropriate_quotes(PATH):
     else:
         raise TypeError('appropriate_quotes():\nThe PATH variable, must be a string and cannot be empty')
     
-#UNQUOTES, THE SUPPLIED PATH
+#UNQUOTES, BEGINNING AND END QUOTES, OF THE SUPPLIED PATH
 def unquote_path(PATH):
     STRIPPED = str(PATH).strip()
     if STRIPPED and isinstance(STRIPPED, str):
@@ -59,8 +59,8 @@ def unquote_path(PATH):
     else:
         raise TypeError('unquote_path():\nThe PATH variable, must be a string and cannot be empty')
 
-#UNQUOTES, STRIPS, EXPANDS VARIABLES, 
-#RESOLVES, AND REMOVES THE PREPENDED PATHLIB PATH (IF ANY),
+#STRIPS, EXPANDS VARIABLES,
+#OS-NORMALIZES SLASHES, IN THE SUPPLIED PATH, CONVERTS DOT-SEQUENCES, AND REMOVES THE PREPENDED PATHLIB PATH (IF ANY),
 #FROM THE SUPPLIED PATH
 def filter_path(PATH):
     APPROPRIATELY_QUOTED = appropriate_quotes(PATH)
@@ -78,7 +78,7 @@ def filter_path(PATH):
     else:
         raise TypeError('filter_path():\nThe PATH variable, must be a string and cannot be empty')
     
-#RECURSIVELY SCANS A FOLDER PATH, FOR THE TOTAL NUMBER, OF FILES AND BYTES
+#RECURSIVELY SCANS, A FOLDER PATH, FOR THE TOTAL NUMBER, OF FILES AND BYTES
 def recursive_files_and_bytes_total(PATH):
     STRIPPED = filter_path(PATH)
     if all([STRIPPED, isinstance(STRIPPED, str), os.path.exists(STRIPPED), os.path.isdir(STRIPPED)]):
@@ -88,7 +88,7 @@ def recursive_files_and_bytes_total(PATH):
         #LOOP THROUGH FOLDERS, IN THE PATH, RECURSIVELY
         for WALK_PATH, DIRECTORIES, FILES in os.walk(STRIPPED):
             
-            #REMOVE HIDDEN AND LINK FILES, FROM FILES ARRAY
+            #REMOVE HIDDEN AND LINK FILES, FROM THE FILES ARRAY
             FILES = [FILE for FILE in FILES if not FILE.startswith('.') and not os.path.islink(os.path.join(WALK_PATH, FILE))]
 
             #LOOP THROUGH FILES, IN THE DIRECTORY LOOP
@@ -105,7 +105,7 @@ def recursive_files_and_bytes_total(PATH):
     elif os.path.isfile(PATH):
         raise NotADirectoryError('recursive_files_and_bytes_total():\nThe PATH variable, must be a folder path')
 
-#CONVERT BYTES, TO OTHER MEASUREMENTS, IN BINARY FORMAT
+#CONVERTS BYTES, TO OTHER MEASUREMENTS, IN BINARY FORMAT
 def convert_bytes(BYTES):
     STRIPPED = str(BYTES).strip()
     if STRIPPED and STRIPPED.isnumeric():
@@ -164,7 +164,7 @@ def recursive_copy_progress_bar(COPIED_BYTES, TOTAL_BYTES, ETA_SECONDS, LENGTH =
     if PERCENT == int(100.0):
         print('\nFinished!')
 
-#RECURSIVELY COPIES A SUPPLIED SOURCE PATH, TO A DESTINATION PATH,
+#RECURSIVELY COPIES A SUPPLIED SOURCE PATH, TO A SUPPLIED DESTINATION PATH,
 #WHILE SKIPPING NON-FILES, THAT CANNOT BE COPIED, LIKE SYM-LINKS
 def recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH):
     if str(SOURCE_PATH).strip() and str(DESTINATION_PATH).strip():
@@ -196,7 +196,7 @@ def recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH):
                     SUB_DESTINATION_DIRECTORY = os.path.join(FILTERED_DESTINATION_PATH, RELATIVE_DIRECTORY)
                     os.makedirs(SUB_DESTINATION_DIRECTORY, exist_ok=True)
 
-                    #REMOVE HIDDEN AND LINK FILES, FROM FILES ARRAY
+                    #REMOVE HIDDEN AND LINK FILES, FROM THE FILES ARRAY
                     FILES = [FILE_NAME for FILE_NAME in FILES if not FILE_NAME.startswith('.') and not os.path.islink(os.path.join(WALK_PATH, FILE_NAME))]
                     
                     for FILE_NAME in FILES:
