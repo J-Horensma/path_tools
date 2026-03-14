@@ -21,6 +21,11 @@ if the path contains a space, then returns the unquoted path, to the "filter_pat
 ![Alt text](Images/filter_path_converted_OS-specific_variables.png)\
 ![Alt text](Images/filter_path_dot-sequences_converted.png)
 
+## **The "recursive_files_and_bytes_total()" Function:**
+### **Syntax:** 
+#### recursive_files_and_bytes_total(PATH)
+### **Description:**
+
 ## **The "recursive_copy_with_progress()" Function:**
 ### **Syntax:** 
 #### recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH)
