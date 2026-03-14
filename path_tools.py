@@ -47,7 +47,7 @@ def appropriate_quotes(PATH):
     else:
         raise TypeError('appropriate_quotes():\nThe PATH variable, must be a string and cannot be empty')
     
-#UNQUOTE, THE SUPPLIED PATH
+#UNQUOTES, THE SUPPLIED PATH
 def unquote_path(PATH):
     STRIPPED = str(PATH).strip()
     if STRIPPED and isinstance(STRIPPED, str):
@@ -59,8 +59,8 @@ def unquote_path(PATH):
     else:
         raise TypeError('unquote_path():\nThe PATH variable, must be a string and cannot be empty')
 
-#UNQUOTE, STRIP, EXPAND VARIABLES, 
-#RESOLVE, AND REMOVE PREPENDED, PATHLIB PATH (IF ANY),
+#UNQUOTES, STRIPS, EXPANDS VARIABLES, 
+#RESOLVES, AND REMOVES THE PREPENDED PATHLIB PATH (IF ANY),
 #FROM THE SUPPLIED PATH
 def filter_path(PATH):
     APPROPRIATELY_QUOTED = appropriate_quotes(PATH)
