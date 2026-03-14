@@ -44,3 +44,5 @@ if the path contains a space, then returns the unquoted path, to the "filter_pat
 
 ### **Example:**
 ![Alt text](Images/recursive_copy_with_progress.png)
+
+## See the "Tests" folder, to try out all of the "path_tools" functions
