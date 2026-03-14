@@ -27,6 +27,7 @@ if the path contains a space, then returns the unquoted path, to the "filter_pat
 **1.)** Uses path_tools' built-in "filter_path()" function, to filter the supplied path\
 **2.)** Recursively scans, for the total number of files and bytes of data, using the "os" module\
 **3.)** Returns the total number of files and the total number of bytes, of data (See the test file: "recursive_files_and_bytes_total.py", in the "Tests" folder)
+**4.)** The "path_tools" library, includes a "convert_bytes()" function, to accurately convert bytes, to kilobytes, megabytes, gigabytes, and terrabytes, which can be used on the total bytes return value, of the "recursive_files_and_bytes_total()" function
 
 ### **Examples:**
 
