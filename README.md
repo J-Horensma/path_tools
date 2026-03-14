@@ -1,6 +1,12 @@
 # path_tools
 **The "path_tools" library**, is a multi-OS compatible Python library, that includes advanced path-related functions.
 
+## **The "is_safely_quoted()" Function:**
+### **Syntax:** 
+#### is_safely_quoted()
+### **Description:**
+**1.)** Checks if the supplied path, is OS-appropriately quoted and has no extra quotes
+
 ## **The "filter_path()" Function:**
 ### **Syntax:** 
 #### filter_path(PATH)
@@ -44,5 +50,3 @@ if the path contains a space, then returns the unquoted path, to the "filter_pat
 
 ### **Example:**
 ![Alt text](Images/recursive_copy_with_progress.png)
-
-## See the "Tests" folder, to try out all of the "path_tools" functions
