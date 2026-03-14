@@ -6,7 +6,7 @@
 #### filter_path(PATH)
 ### **Description:**
 **1.)** Uses path_tools' built-in "appropriate_quotes()" function, to remove any prepended quotes and matching quotes, at the end of the supplied path (If present), as well as, replace any OS-inappropriate quotes, in the path, with the OS-appropriate quotes (Also, if present)\
-**2.)** The "appropriate_quotes()" function, checks if the supplied path contains a space, if it does, the OS-appropriate quotes are added to the beginning and end of the path and the OS-appropriately quoted path, is returned to the "filter_path()" function, if the path does not contain a space, the "appropriate_quotes()" function, returns a path to the "filter_path()" function, with any quotes removed, that are not part of the path and replaced, when they are part of the path, but are OS-inappropriate quotes\
+**2.)** The "appropriate_quotes()" function, checks if the supplied path contains a space, if it does, the OS-appropriate quotes, are added to the beginning and end of the path and the OS-appropriately quoted path, is returned to the "filter_path()" function, if the path does not contain a space, the "appropriate_quotes()" function, returns a path to the "filter_path()" function, with any quotes removed, that are not part of the path and replaced, when they are part of the path, but are OS-inappropriate quotes\
 **3.)** Uses path_tools' built-in "unquote_path()" function, to remove the beginning and end quotes, added by the "appropriate_quotes()" function,
 if the path contains a space, then returns the unquoted path, to the "filter_path()" function\
 **4.)** Converts any OS-specific variables, in the path, using the "os" module\
