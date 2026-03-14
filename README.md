@@ -10,7 +10,7 @@
 **3.)** Uses path_tools' built-in "unquote_path()" function, to remove the beginning and end quotes, added by the "appropriate_quotes()" function,
 if the path contains a space, then returns the unquoted path, to the "filter_path()" function\
 **4.)** Converts any OS-specific variables, in the path, using the "os" module\
-**5.)** Converts any dot-sequences, in the path, using the "pathlib" module\
+**5.)** Converts any dot-sequences, in the path, and replaces OS-inappropriate slashes, using the "pathlib" module\
 **6.)** Returns a filtered and converted path (See the test file: "filter_path.py", in the "Tests" folder)
 
 ### **Examples:**
