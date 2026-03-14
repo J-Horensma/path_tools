@@ -2,8 +2,7 @@
 **The "path_tools" library**, is a multi-OS compatible Python library, that includes advanced path-related functions.
 
 ## **The "is_safely_quoted()" Function:**
-### **Syntax:** 
-#### is_safely_quoted(PATH)
+### **Syntax:** is_safely_quoted(PATH)
 ### **Description:**
 **1.)** Checks if the supplied path, is OS-appropriately quoted and has no extra quotes\
 **2.)** Returns True, if the supplied path is appropriately quoted (Or appropriately not), otherwise False
