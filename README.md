@@ -1,5 +1,5 @@
 # path_tools
-**The "path_tools" library**, is a multi-OS Python library, that includes advanced path-related functions.
+**The "path_tools" library**, is a multi-OS compatible Python library, that includes advanced path-related functions.
 
 ## **The "filter_path()" Function:**
 ### **Syntax:** 
