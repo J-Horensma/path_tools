@@ -78,7 +78,7 @@ def filter_path(PATH):
     else:
         raise TypeError('filter_path():\nThe PATH variable, must be a string and cannot be empty')
     
-#RECURSIVELY SCAN A FOLDER PATH, FOR THE TOTAL FILES AND BYTES
+#RECURSIVELY SCANS A FOLDER PATH, FOR THE TOTAL NUMBER, OF FILES AND BYTES
 def recursive_files_and_bytes_total(PATH):
     STRIPPED = filter_path(PATH)
     if all([STRIPPED, isinstance(STRIPPED, str), os.path.exists(STRIPPED), os.path.isdir(STRIPPED)]):
@@ -105,7 +105,7 @@ def recursive_files_and_bytes_total(PATH):
     elif os.path.isfile(PATH):
         raise NotADirectoryError('recursive_files_and_bytes_total():\nThe PATH variable, must be a folder path')
 
-#CONVERT BYTES, TO PROPER INCREMENTS, IN BINARY FORMAT
+#CONVERT BYTES, TO OTHER MEASUREMENTS, IN BINARY FORMAT
 def convert_bytes(BYTES):
     STRIPPED = str(BYTES).strip()
     if STRIPPED and STRIPPED.isnumeric():
@@ -123,7 +123,7 @@ def convert_bytes(BYTES):
     else:
         raise TypeError('convert_bytes():\nThe BYTES variable, must be an integer and cannot be empty')
     
-#CONVERT SECONDS TO FULL TIME FORMAT
+#CONVERTS SECONDS TO FULL TIME FORMAT
 def convert_seconds(SECONDS):
     STRIPPED = str(SECONDS).strip()
     if STRIPPED and STRIPPED.isnumeric():
@@ -164,7 +164,7 @@ def recursive_copy_progress_bar(COPIED_BYTES, TOTAL_BYTES, ETA_SECONDS, LENGTH =
     if PERCENT == int(100.0):
         print('\nFinished!')
 
-#RECURSIVELY COPY A FOLDER PATH, TO ANOTHER PATH,
+#RECURSIVELY COPIES A SUPPLIED SOURCE PATH, TO A DESTINATION PATH,
 #WHILE SKIPPING NON-FILES, THAT CANNOT BE COPIED, LIKE SYM-LINKS
 def recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH):
     if str(SOURCE_PATH).strip() and str(DESTINATION_PATH).strip():
@@ -181,7 +181,7 @@ def recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH):
                     i = int(0)
                     MAKE_DESTINATION_DIRECTORY = FILTERED_DESTINATION_PATH
 
-                    #CHECK IF THE FOLDER, ALREADY EXISTS, IN THE DESTINATION PATH
+                    #CHECK IF THE FOLDER ALREADY EXISTS, IN THE DESTINATION PATH,
                     #AND MAKE A NEW ONE, WITH A DIFFERENT NAME, IF SO
                     while os.path.exists(MAKE_DESTINATION_DIRECTORY) == True:
                         i += int(1)
