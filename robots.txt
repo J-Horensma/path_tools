@@ -1,1 +1,1 @@
-Sitemap: https://github.com/J-Horensma/path_tools/sitemap.xml
+Sitemap: https://github.com/J-Horensma/path_tools/sitemap.txt
