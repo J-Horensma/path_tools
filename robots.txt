@@ -1,1 +1,3 @@
+User-agent: Googlebot
+Allow: /sitemap.xml
 Sitemap: https://github.com/J-Horensma/path_tools/sitemap.txt
