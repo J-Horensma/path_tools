@@ -177,7 +177,7 @@ def recursive_copy_progress_bar(COPIED_BYTES, TOTAL_BYTES, ETA_SECONDS, LENGTH =
             BARS_FILLED = (LENGTH * COPIED_BYTES) // TOTAL_BYTES
             PROGRESS_BAR = '=' * BARS_FILLED + '-' * (LENGTH - BARS_FILLED)
             ETA = convert_seconds(ETA_SECONDS)
-            sys.stdout.write(f'\rProgress: [{PROGRESS_BAR}]({round(PERCENT)}%) ETA: {ETA.ljust(50)}')
+            sys.stdout.write(f'\rProgress: [{PROGRESS_BAR}]({round(PERCENT)}%) ETA: {ETA.ljust(30)}')
             sys.stdout.flush()
         else:
             raise TypeError('"recursive_copy_progress_bar()":\nOne or more non-integer variables, were supplied')   
@@ -199,7 +199,7 @@ def recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH):
                     COPIED_FILES = 0
                     COPIED_BYTES = 0
                     TOTAL_FILES, TOTAL_BYTES = recursive_files_and_bytes_total(SOURCE_PATH)
-                    print(f'Copying a total of: {TOTAL_FILES} files ({convert_bytes(TOTAL_BYTES)}, of data)')
+                    print(f'Copying a total of: {TOTAL_FILES} files ({convert_bytes(TOTAL_BYTES)})')
                     DESTINATION_PATH = os.path.join(DESTINATION_PATH, os.path.basename(SOURCE_PATH))
                     if SOURCE_PATH == DESTINATION_PATH or os.path.exists(DESTINATION_PATH):
                         i = 0
