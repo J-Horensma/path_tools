@@ -51,13 +51,13 @@ def appropriate_quotes(PATH):
     else:
         raise EOFError('"appropriate_quotes()":\nThe "PATH" variable, cannot be empty')
     
-#UNQUOTES, BEGINNING AND END QUOTES, OF THE SUPPLIED PATH
+#UNQUOTES, THE FIRST INSTANCES, OF BEGINNING AND END QUOTES, OF THE SUPPLIED PATH
 def unquote_path(PATH):
     PATH = PATH.strip()
     if PATH:
         if isinstance(PATH, str):
-            OS_QUOTE = '"' if platform.system() == 'Windows' else "'"
-            if PATH[0] == OS_QUOTE and PATH[0] == PATH[-1]:
+            QUOTES = ["'", '"']
+            if PATH[0] in QUOTES and PATH[0] == PATH[-1]:
                 return PATH[1:-1]
             else:
                 return PATH
