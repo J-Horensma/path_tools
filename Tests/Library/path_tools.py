@@ -1,4 +1,4 @@
-import os, shutil, sys, platform, time
+import os, sys, platform, time
 from pathlib import Path
 
 #RETURNS "True", IF THE SUPPLIED PATH IS OS-APPROPRIATELY AND CORRECTLY QUOTED, OTHERWISE "False"
@@ -196,8 +196,6 @@ def recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH):
             DESTINATION_PATH = filter_path(DESTINATION_PATH)
             if os.path.exists(SOURCE_PATH) and os.path.exists(DESTINATION_PATH):
                 if os.path.isdir(SOURCE_PATH) and os.path.isdir(DESTINATION_PATH):
-                    COPIED_FILES = 0
-                    COPIED_BYTES = 0
                     TOTAL_FILES, TOTAL_BYTES = recursive_files_and_bytes_total(SOURCE_PATH)
                     print(f'Copying a total of: {TOTAL_FILES} files ({convert_bytes(TOTAL_BYTES)})')
                     DESTINATION_PATH = os.path.join(DESTINATION_PATH, os.path.basename(SOURCE_PATH))
@@ -215,6 +213,7 @@ def recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH):
                     #MAKE THE FOLDER, IN THE DESTINATION PATH
                     os.makedirs(DESTINATION_PATH, exist_ok=True)
                     START_COPY = time.time()
+                    COPIED_BYTES = 0
                     for WALK_PATH, DIRECTORIES, FILES in os.walk(SOURCE_PATH):
                         RELATIVE_DIRECTORY = os.path.relpath(WALK_PATH, SOURCE_PATH)
                         SUB_DESTINATION_DIRECTORY = os.path.join(DESTINATION_PATH, RELATIVE_DIRECTORY)
@@ -225,16 +224,21 @@ def recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH):
                         
                         for FILE_NAME in FILES:
                             SOURCE_FILE_PATH = os.path.join(WALK_PATH, FILE_NAME)
-                            BYTES = os.path.getsize(SOURCE_FILE_PATH)
                             DESTINATION_FILE_PATH = os.path.join(SUB_DESTINATION_DIRECTORY, FILE_NAME)
-                            shutil.copy2(SOURCE_FILE_PATH, DESTINATION_FILE_PATH)
-                            COPY_COMPLETE = time.time()
-                            ELAPSED_SECONDS = float(COPY_COMPLETE - START_COPY)
-                            COPIED_FILES += 1
-                            COPIED_BYTES += BYTES
-                            BYTES_PER_SECOND = COPIED_BYTES / ELAPSED_SECONDS
-                            ETA_SECONDS =  int(f'{(TOTAL_BYTES - COPIED_BYTES) / BYTES_PER_SECOND:.0f}')
-                            recursive_copy_progress_bar(COPIED_BYTES, TOTAL_BYTES, ETA_SECONDS)
+                            with open(SOURCE_FILE_PATH, 'rb') as FILE_SOURCE, open(DESTINATION_FILE_PATH, 'wb') as FILE_DESTINATION:
+                                BUFFER_SIZE = (1024 * 1024 * 2)
+                                while True:
+                                    DATA_CHUNK = FILE_SOURCE.read(BUFFER_SIZE)
+                                    if not DATA_CHUNK:
+                                        break
+                                    else:
+                                        FILE_DESTINATION.write(DATA_CHUNK)
+                                        COPIED_BYTES += len(DATA_CHUNK)
+                                    COPY_COMPLETE = time.time()
+                                    ELAPSED_SECONDS = float(COPY_COMPLETE - START_COPY)
+                                    BYTES_PER_SECOND = (COPIED_BYTES / ELAPSED_SECONDS)
+                                    ETA_SECONDS =  int(f'{(TOTAL_BYTES - COPIED_BYTES) / BYTES_PER_SECOND:.0f}')
+                                    recursive_copy_progress_bar(COPIED_BYTES, TOTAL_BYTES, ETA_SECONDS)
                     return
                 else:
                     raise NotADirectoryError('"recursive_copy_with_progress()":\nOne or more supplied paths, do not exist')
