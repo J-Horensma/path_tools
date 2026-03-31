@@ -41,9 +41,9 @@ if the path contains a space, then returns the unquoted path, to the "filter_pat
 ### **Syntax:** recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH)
 ### **Description:**
 **1.)** Uses "path_tools"' built-in "filter_path()" function, to filter the supplied source and destination paths\
-**2.)** Calculates and displays the total number of files and bytes to be copied, from the source path, using path_tools' built-in "recursive_files_and_bytes_total()", "convert_bytes()" functions, and the help of the "os" module\
-**3.)** Creates a new directory, in the destination path, matching the source path's folder name, using the "os" module, if the folder does not already exist in the destination path, if it does exist, in the destination path, a new directory, with a new name, is created in the destination path\
-**4.)** Recursively copies all files and folders within the supplied source path, to the supplied destination path, while displaying a live progress bar and an ETA, until finished, using "path_tools"' built-in "recursive_copy_progress_bar()", "convert_seconds()" functions, and the help of the, "sys", "shutil", and "time" modules (See the test file: "recursive_copy_with_progress.py", in the "Tests" folder)
+**2.)** Calculates and displays the total number of files and bytes to be copied, from the source path, using "path_tools"' built-in "recursive_files_and_bytes_total()", "convert_bytes()" functions, and the help of the "os" module\
+**3.)** Creates a new directory, in the destination path, matching the source path's folder name, using the "os" module, if the folder does not already exist in the destination path, if it does exist in the destination path, a new directory with a new name is created, in the destination path\
+**4.)** Recursively copies all files and folders within the supplied source path, to the supplied destination path, while displaying a live progress bar and an ETA until finished, using "path_tools"' built-in "recursive_copy_progress_bar()", "convert_seconds()" functions, and the help of the "sys" and "time" modules (See the test file: "recursive_copy_with_progress.py", in the "Tests" folder)
 
 ### **Example:**
 ![Alt text](Images/recursive_copy_with_progress.png)
