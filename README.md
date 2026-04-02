@@ -39,8 +39,8 @@ if the path contains a space, then returns the unquoted path, to the "filter_pat
 
 ## **The "recursive_copy_with_progress()" Function:**
 ### **Usage:** 
-### from Library.path_tools import recursive_copy_with_progress
-### recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH)
+from Library.path_tools import recursive_copy_with_progress
+recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH)
 ### **Description:**
 **1.)** Uses "path_tools"' built-in "filter_path()" function, to filter the supplied source and destination paths\
 **2.)** Calculates and displays the total number of files and bytes to be copied, from the source path, using "path_tools"' built-in "recursive_files_and_bytes_total()", "convert_bytes()" functions, and the help of the "os" module\
