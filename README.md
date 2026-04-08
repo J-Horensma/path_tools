@@ -2,18 +2,12 @@
 The "path_tools" library, is a multi-OS compatible python library, that includes advanced path-related functions.
 
 ## **The "is_safely_quoted()" Function:**
-### **Usage:** 
-from Library.path_tools import is_safely_quoted\
-is_safely_quoted(PATH)
 
 ### **Description:**
 **1.)** Checks if the supplied path, is OS-appropriately quoted and has no extra quotes\
 **2.)** Returns True, if the supplied path is appropriately quoted (Or appropriately not), otherwise False
 
 ## **The "filter_path()" Function:**
-### **Usage:** 
-from Library.path_tools import filter_path\
-filter_path(PATH)
 
 ### **Description:**
 **1.)** Uses "path_tools"' built-in "appropriate_quotes()" function, to remove any prepended quotes and matching quotes, at the end of the supplied path (If present), as well as, replace any OS-inappropriate quotes, in the path, with the OS-appropriate quotes (Also, if present)\
@@ -33,9 +27,6 @@ if the path contains a space, then returns the unquoted path, to the "filter_pat
 ![Alt text](Images/filter_path_replaced_slashes.png)\
 
 ## **The "recursive_files_and_bytes_total()" Function:**
-### **Usage:** 
-from Library.path_tools import recursive_files_and_bytes_total\
-recursive_files_and_bytes_total(PATH)
 
 ### **Description:**
 **1.)** Uses "path_tools"' built-in "filter_path()" function, to filter the supplied path\
@@ -47,9 +38,6 @@ recursive_files_and_bytes_total(PATH)
 ![Alt text](Images/recursive_files_and_bytes_total.png)\
 
 ## **The "recursive_copy_with_progress()" Function:**
-### **Usage:** 
-from Library.path_tools import recursive_copy_with_progress\
-recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH)
 
 ### **Description:**
 **1.)** Uses "path_tools"' built-in "filter_path()" function, to filter the supplied source and destination paths\
