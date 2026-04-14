@@ -23,6 +23,11 @@ if the path contains a space, then returns the unquoted path, to the "filter_pat
 **5.)** Converts any dot-sequences, in the path, and replaces OS-inappropriate slashes, using the "pathlib" module\
 **6.)** Returns a filtered and converted path (See the test file: "filter_path.py", in the "Tests" folder)
 
+### **Example Usage:**
+import path_tools\
+PATH = input('Enter a path: ')\
+print(filter_path(PATH)) #RETURNS A FILTERED PATH
+
 ### **Examples:**
 ![Alt text](Images/filter_path_appropriated_quotes_1.png)\
 ![Alt text](Images/filter_path_appropriated_quotes_2.png)\
@@ -39,6 +44,11 @@ if the path contains a space, then returns the unquoted path, to the "filter_pat
 **3.)** Returns the total number of files and the total number of bytes, of data (See the test file: "recursive_files_and_bytes_total.py", in the "Tests" folder)\
 **4.)** The "path_tools" library, includes a "convert_bytes()" function, to appropriately convert bytes, to kilobytes, megabytes, gigabytes, and terrabytes, which can be used on the total bytes return value, of the "recursive_files_and_bytes_total()" function
 
+### **Example Usage:**
+import path_tools\
+PATH = input('Enter a path: ')\
+print(recursive_files_and_bytes_total(PATH)) #RETURNS A FILTERED PATH
+
 ### **Example:**
 ![Alt text](Images/recursive_files_and_bytes_total.png)\
 
@@ -49,6 +59,11 @@ if the path contains a space, then returns the unquoted path, to the "filter_pat
 **2.)** Calculates and displays the total number of files and bytes to be copied, from the source path, using "path_tools"' built-in "recursive_files_and_bytes_total()", "convert_bytes()" functions, and the help of the "os" module\
 **3.)** Creates a new directory, in the destination path, matching the source path's folder name, using the "os" module, if the folder does not already exist in the destination path, if it does exist in the destination path, a new directory with a new name is created, in the destination path\
 **4.)** Recursively copies all files and folders within the supplied source path, to the supplied destination path, while displaying a live progress bar and an ETA until finished, using "path_tools"' built-in "recursive_copy_progress_bar()", "convert_seconds()" functions, and the help of the "sys" and "time" modules (See the test file: "recursive_copy_with_progress.py", in the "Tests" folder)
+
+import path_tools\
+SOURCE_PATH = input('Enter a source path: ')\
+SOURCE_PATH = input('Enter a destination path: ')\
+recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH) #COPYS THE SOURCE PATH TO THE DESTINATION PATH AND DISPLAYS PROGRESS
 
 ### **Example:**
 ![Alt text](Images/recursive_copy_with_progress.png)
