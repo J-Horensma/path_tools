@@ -46,7 +46,7 @@ print(filter_path(PATH)) #RETURNS A FILTERED PATH
 
 ### **Example Usage:**
 import path_tools\
-PATH = input('Enter a path: ')\
+PATH = input('Enter a folder path: ')\
 print(recursive_files_and_bytes_total(PATH)) #RETURNS THE TOTAL AMOUNT, OF FILES AND DATA CONTAINED, IN THE PATH
 
 ### **Example:**
