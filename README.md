@@ -62,7 +62,7 @@ print(recursive_files_and_bytes_total(PATH)) #RETURNS THE TOTAL AMOUNT, OF FILES
 
 import path_tools\
 SOURCE_PATH = input('Enter a source path: ')\
-SOURCE_PATH = input('Enter a destination path: ')\
+DESTINATION_PATH = input('Enter a destination path: ')\
 recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH) #COPYS THE SOURCE PATH TO THE DESTINATION PATH AND DISPLAYS PROGRESS
 
 ### **Example:**
