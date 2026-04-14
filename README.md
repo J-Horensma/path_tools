@@ -8,7 +8,7 @@ The "path_tools" library, is a multi-OS compatible python library, that includes
 **2.)** Returns True, if the supplied path is appropriately quoted (Or appropriately not), otherwise False
 
 ### **Example Usage:**
-PATH = input('Enter a path: ')
+PATH = input('Enter a path: ')\
 print(is_safely_quoted(PATH)) #RETURNS "True" OR "False"
 
 ## **The "filter_path()" Function:**
