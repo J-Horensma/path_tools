@@ -86,60 +86,150 @@ def filter_path(PATH):
             raise TypeError('"filter_path()":\nThe "PATH" variable, must be a string')
     else:
         raise EOFError('"filter_path()":\nThe "PATH" variable, cannot be empty')
-    
-#RECURSIVELY SCANS A FOLDER PATH, FOR THE TOTAL NUMBER, OF FILES AND BYTES
-def recursive_files_and_bytes_total(PATH):
-    PATH = PATH.strip()
-    if PATH:
-        if isinstance(PATH, str):
-            PATH = filter_path(PATH)
-            if os.path.exists(PATH):
-                if os.path.isdir(PATH):
-                    FILES_TOTAL = 0
-                    BYTES_TOTAL = 0
 
-                    #LOOP THROUGH FOLDERS, IN THE PATH, RECURSIVELY
-                    for WALK_PATH, DIRECTORIES, FILES in os.walk(PATH):
-                        
-                        #REMOVE HIDDEN AND LINK FILES, FROM THE FILES LIST
-                        FILES = [FILE for FILE in FILES if not FILE.startswith('.') and not os.path.islink(os.path.join(WALK_PATH, FILE))]
+#THIS FUNCTION:
+#1.) REQUIRES A PATH STRING
+#2.) CHECKS IF THE PATH IS A NORMAL PATH
+#3.) RETURNS "True" OR "False"
+def is_normal(PATH):
+    try:
+        PATH = abspath(PATH)
+        #CHECK IF THE PATH IS A FIFO, MOUNTPOINT, SOCKET, JUNCTION, SYMLINK, CLOUD-PLACEHOLDER, VIRTUALIZATION, DOOR, OR WHITEOUT
+        PATH_STATUS = Path(PATH).lstat()
+        PATH_MODE = PATH_STATUS.st_mode
+        if not any([S_ISDIR(PATH_MODE), S_ISREG(PATH_MODE)]):
+            return False
+        elif system() == 'Windows':
+            #CHECK IF THE PATH, IS A HIDDEN, SYSTEM, OR REPARSE-POINT PATH
+            WINDOWS_FILE_ATTRIBUTE_HIDDEN = 0x2
+            WINDOWS_FILE_ATTRIBUTE_SYSTEM = 0x4
+            WINDOWS_FILE_ATTRIBUTE_REPARSE_POINT = 0x400
+            WINDOWS_FILE_ATTRIBUTES = PATH_STATUS.st_file_attributes
+            if WINDOWS_FILE_ATTRIBUTES & WINDOWS_FILE_ATTRIBUTE_SYSTEM:
+                return False
+            elif WINDOWS_FILE_ATTRIBUTES & WINDOWS_FILE_ATTRIBUTE_HIDDEN:
+                return False
+            elif WINDOWS_FILE_ATTRIBUTES & WINDOWS_FILE_ATTRIBUTE_REPARSE_POINT:
+                return False
+        return True
+    except:
+        return False
 
-                        #LOOP THROUGH FILES, IN THE FOLDER
-                        for FILE in FILES:
-                            FILES_TOTAL += 1
-                            SCAN_PATH = os.path.join(WALK_PATH, FILE)
-                            FILE_SIZE = os.path.getsize(SCAN_PATH)
-                            BYTES_TOTAL += FILE_SIZE
-                    return FILES_TOTAL, BYTES_TOTAL
-                else:
-                    raise NotADirectoryError('"recursive_files_and_bytes_total()":\nThe "PATH" variable, must be a path, to a folder')
-            else:
-                raise FileNotFoundError(f'"recursive_files_and_bytes_total()":\nThe path: {PATH}, was not found')
-        else:
-            raise TypeError('"recursive_files_and_bytes_total()":\nThe "PATH" variable, must be a string')
-    else:
-        raise EOFError('"recursive_files_and_bytes_total()":\nThe "PATH" variable, cannot be empty')
+#THIS FUNCTION:
+#1.) REQUIRES A PATH STRING AND A PERMISSION(S) STRING CONTAINING "R" (READ) "W" (WRITE) AND/OR "X" (EXECUTE)
+#2.) CHECKS IF THE SUPPLIED PATH, HAS THE REQUESTED PERMISSION(S)
+#3.) RETURNS "True" OR "False"
+def has_permissions(PATH, PERMISSIONS):
+    try:
+        PATH = abspath(PATH)
+        #ENSURE R, W, AND/OR X ARE INCLUDED, IN THE PERMISSIONS PARAMETER
+        if not set(PERMISSIONS) <= {'R','W','X'}:
+            return False
+        #CHECK STATIC METADATA PERMISSIONS
+        elif 'R' in PERMISSIONS and not access(PATH, R_OK):
+            return False
+        elif 'W' in PERMISSIONS and not access(PATH, W_OK):
+            return False
+        elif 'X' in PERMISSIONS and not access(PATH, X_OK):
+            return False
+        elif system() == 'Windows':
+            #CHECK WINDOWS DYNAMIC METADATA PERMISSIONS
+            from ctypes import wintypes, WinDLL
+            GENERIC_READ  = 0x80000000
+            FILE_SHARE_READ = 0x00000001
+            FILE_SHARE_WRITE = 0x00000002
+            FILE_SHARE_DELETE = 0x00000004
+            OPEN_EXISTING = 3
+            FILE_FLAG_BACKUP_SEMANTICS = 0x02000000
+            kernel32 = WinDLL('kernel32', use_last_error=True)
+            CreateFileW = kernel32.CreateFileW
+            CreateFileW.argtypes = [
+                wintypes.LPCWSTR,
+                wintypes.DWORD,
+                wintypes.DWORD,
+                wintypes.LPVOID,
+                wintypes.DWORD,
+                wintypes.DWORD,
+                wintypes.HANDLE
+            ]
+            CreateFileW.restype = wintypes.HANDLE
+            def can_access(PATH):
+                HANDLE = CreateFileW(
+                    PATH,
+                    GENERIC_READ,
+                    FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
+                    None,
+                    OPEN_EXISTING,
+                    FILE_FLAG_BACKUP_SEMANTICS,
+                    None
+                )
+                if HANDLE == wintypes.HANDLE(-1).value:
+                    return False
+                kernel32.CloseHandle(HANDLE)
+                return True
+            if not can_access(PATH):
+                return False
+        return True
+    except:
+        return False
+        
+#THIS FUNCTION:
+#1.) REQUIRES A FOLDER PATH STRING
+#2.) RECURSIVELY SCANS THE PATH
+#3.) RETURNS ABSOLUTE FOLDER PATH AND ABSOLUTE FILE PATH LISTS, TOTAL AMOUNT OF ACCESSABLE FILE(S) INTEGER, AND A BYTES TOTAL STRING FOR ALL FILE(S)
+def recursive_files_and_bytes_total(FOLDER_PATH):
+    if not isabs(FOLDER_PATH):
+        raise ValueError('[ValueError]\nFunction: "recursive_files_and_bytes_total()"\nThe folder path parameter must be an absolute path.')
+    elif not isdir(FOLDER_PATH):
+        raise NotADirectoryError('[NotADirectoryError]\nFunction: "recursive_files_and_bytes_total()"\nThe folder path parameter must be a path to an existing folder.')
+    try:
+        FOLDER_PATH = abspath(FOLDER_PATH)
+        ABSOLUTE_FOLDER_PATHS = []
+        ABSOLUTE_FILE_PATHS = []
+        FILES_TOTAL = 0
+        BYTES_TOTAL = 0
+        for ROOT, FOLDER_NAMES, FILE_NAMES in walk(FOLDER_PATH):
+            FOLDER_NAMES = [FOLDER_NAME for FOLDER_NAME in FOLDER_NAMES]
+            FILE_NAMES = [FILE_NAME for FILE_NAME in FILE_NAMES if all([is_normal(join(ROOT, FILE_NAME)), has_permissions(join(ROOT, FILE_NAME), 'RW')])]
+            for FOLDER_NAME in FOLDER_NAMES:
+                ABSOLUTE_FOLDER_PATH = abspath(join(ROOT, FOLDER_NAME))
+                ABSOLUTE_FOLDER_PATHS.append(ABSOLUTE_FOLDER_PATH)
+            for FILE_NAME in FILE_NAMES:
+                FILES_TOTAL += 1
+                ABSOLUTE_FILE_PATH = abspath(join(ROOT, FILE_NAME))
+                ABSOLUTE_FILE_PATHS.append(ABSOLUTE_FILE_PATH)
+                FILE_SIZE = getsize(ABSOLUTE_FILE_PATH)
+                BYTES_TOTAL += FILE_SIZE
+        return ABSOLUTE_FOLDER_PATHS, ABSOLUTE_FILE_PATHS, FILES_TOTAL, BYTES_TOTAL
+    except BaseException as ERROR:
+        raise Exception(f'[{ERROR.__class__.__name__ if str(ERROR).strip() else 'UnknownError'}]\nFunction: "recursive_files_and_bytes_total()"\n{ERROR if str(ERROR).strip() else 'An unknown error occurred!'}')
 
-#CONVERTS BYTES, TO OTHER MEASUREMENTS, IN BINARY FORMAT
-def convert_bytes(BYTES):
-    BYTES = str(BYTES).strip()
-    if BYTES:
-        if BYTES.isnumeric():
-            BYTES = int(BYTES)
-            BINARY_INCREMENT = 1024
-            if BYTES < BINARY_INCREMENT:return f'{BYTES} b'
-            KILOBYTES = f'{round(BYTES/BINARY_INCREMENT, 2)}'
-            if BYTES >= BINARY_INCREMENT and BYTES < BINARY_INCREMENT ** 2:return f'{KILOBYTES} kb'
-            MEGABYTES = round(BYTES/(BINARY_INCREMENT ** 2), 2)
-            if BYTES >= (BINARY_INCREMENT ** 2) and BYTES < BINARY_INCREMENT ** 3:return f'{MEGABYTES} Mb'
-            GIGABYTES = round(BYTES/(BINARY_INCREMENT ** 3), 2)
-            if BYTES >= (BINARY_INCREMENT ** 3) and BYTES < BINARY_INCREMENT ** 4:return f'{GIGABYTES} Gb'
-            TERABYTES = round(BYTES/(BINARY_INCREMENT ** 4), 2)
-            return f'{round(TERABYTES, 2)} Tb'
-        else:
-            raise TypeError('"convert_bytes()":\nThe "BYTES" variable, must be an integer')
-    else:
-        raise EOFError('"convert_bytes()":\nThe "BYTES" variable, cannot be empty')
+#THIS FUNCTION:
+#1.) REQUIRES A BYTES NUMBER STRING OR INTEGER
+#2.) CONVERTS THE SUPPLIED BYTES NUMBER
+#3.) RETURNS THE CONVERTED BYTES AS A STRING
+def convert_bytes(BYTES_NUMBER):
+    if not isinstance(BYTES_NUMBER, (str, int)):
+        raise TypeError('[TypeError]\nFunction: "convert_bytes()"\nThe bytes number parameter must be a string or integer type.')
+    try:
+        BINARY_INCREMENT = 1024
+        if BYTES_NUMBER < BINARY_INCREMENT:return f'{BYTES_NUMBER} Bytes'
+        KILOBYTES = f'{round(BYTES_NUMBER/BINARY_INCREMENT, 2)}'
+        if BYTES_NUMBER >= BINARY_INCREMENT and BYTES_NUMBER < BINARY_INCREMENT ** 2:return f'{KILOBYTES} KB'
+        MEGABYTES = round(BYTES_NUMBER/(BINARY_INCREMENT ** 2), 2)
+        if BYTES_NUMBER >= (BINARY_INCREMENT ** 2) and BYTES_NUMBER < BINARY_INCREMENT ** 3:return f'{MEGABYTES} MB'
+        GIGABYTES = round(BYTES_NUMBER/(BINARY_INCREMENT ** 3), 2)
+        if BYTES_NUMBER >= (BINARY_INCREMENT ** 3) and BYTES_NUMBER < BINARY_INCREMENT ** 4:return f'{GIGABYTES} GB'
+        TERABYTES = round(BYTES_NUMBER/(BINARY_INCREMENT ** 4), 2)
+        if BYTES_NUMBER >= (BINARY_INCREMENT ** 4) and BYTES_NUMBER < BINARY_INCREMENT ** 5:return f'{TERABYTES} TB'
+        PETABYTES = round(BYTES_NUMBER/(BINARY_INCREMENT ** 5), 2)
+        if BYTES_NUMBER >= (BINARY_INCREMENT ** 5) and BYTES_NUMBER < BINARY_INCREMENT ** 6:return f'{PETABYTES} PB'
+        EXABYTES = round(BYTES_NUMBER/(BINARY_INCREMENT ** 6), 2)
+        if BYTES_NUMBER >= (BINARY_INCREMENT ** 6) and BYTES_NUMBER < BINARY_INCREMENT ** 7:return f'{EXABYTES} EB'
+        ZETTABYTES = round(BYTES_NUMBER/(BINARY_INCREMENT ** 7), 2)
+        if BYTES_NUMBER >= (BINARY_INCREMENT ** 7) and BYTES_NUMBER < BINARY_INCREMENT ** 8:return f'{ZETTABYTES} ZB'
+    except BaseException as ERROR:
+        raise Exception(f'[{ERROR.__class__.__name__ if str(ERROR).strip() else 'UnknownError'}]\nFunction: "convert_bytes()"\n{ERROR if str(ERROR).strip() else 'An unknown error occurred!'}')
     
 #CONVERTS SECONDS TO FULL TIME FORMAT
 def convert_seconds(SECONDS):
