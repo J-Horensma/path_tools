@@ -176,7 +176,8 @@ def has_permissions(PATH, PERMISSIONS):
 #THIS FUNCTION:
 #1.) REQUIRES A FOLDER PATH STRING
 #2.) RECURSIVELY SCANS THE PATH
-#3.) RETURNS ABSOLUTE FOLDER PATH AND ABSOLUTE FILE PATH LISTS, TOTAL AMOUNT OF ACCESSABLE FILE(S) INTEGER, AND A BYTES TOTAL STRING FOR ALL FILE(S)
+#3.) RETURNS A FILE PATHS LIST WITH TUPLE VALUES CONTAINING A FILE PATH STRING AND "True" OR "False" FOR FILE PATH ACCESSABILITY STATUS, 
+#AN ACCESSABLE FILES TOTAL INTEGER, AND AN ACCESSABLE FILES BYTES TOTAL INTEGER
 def recursive_files_and_bytes_total(FOLDER_PATH):
     if not isabs(FOLDER_PATH):
         raise ValueError('[ValueError]\nFunction: "recursive_files_and_bytes_total()"\nThe folder path parameter must be an absolute path.')
@@ -184,36 +185,34 @@ def recursive_files_and_bytes_total(FOLDER_PATH):
         raise NotADirectoryError('[NotADirectoryError]\nFunction: "recursive_files_and_bytes_total()"\nThe folder path parameter must be a path to an existing folder.')
     try:
         FOLDER_PATH = abspath(FOLDER_PATH)
-        ABSOLUTE_FOLDER_PATHS = []
-        ABSOLUTE_FILE_PATHS = []
         FILES_TOTAL = 0
         BYTES_TOTAL = 0
-        for ROOT, FOLDER_NAMES, FILE_NAMES in walk(FOLDER_PATH):
-            FOLDER_NAMES = [FOLDER_NAME for FOLDER_NAME in FOLDER_NAMES]
-            FILE_NAMES = [FILE_NAME for FILE_NAME in FILE_NAMES if all([is_normal(join(ROOT, FILE_NAME)), has_permissions(join(ROOT, FILE_NAME), 'RW')])]
-            for FOLDER_NAME in FOLDER_NAMES:
-                ABSOLUTE_FOLDER_PATH = abspath(join(ROOT, FOLDER_NAME))
-                ABSOLUTE_FOLDER_PATHS.append(ABSOLUTE_FOLDER_PATH)
-            for FILE_NAME in FILE_NAMES:
-                FILES_TOTAL += 1
-                ABSOLUTE_FILE_PATH = abspath(join(ROOT, FILE_NAME))
-                ABSOLUTE_FILE_PATHS.append(ABSOLUTE_FILE_PATH)
-                FILE_SIZE = getsize(ABSOLUTE_FILE_PATH)
-                BYTES_TOTAL += FILE_SIZE
-        return ABSOLUTE_FOLDER_PATHS, ABSOLUTE_FILE_PATHS, FILES_TOTAL, BYTES_TOTAL
+        for ROOT_PATH, FOLDER_NAME, FILE_NAME in walk(FOLDER_PATH):
+            FILE_PATHS = [
+                (
+                join(ROOT_PATH, FILE_NAME),
+                True if all([is_normal(join(ROOT_PATH, FILE_NAME)), has_permissions(join(ROOT_PATH, FILE_NAME), 'RW')]) else False
+                ) 
+                for FILE_NAME in FILE_NAMES
+            ]
+            for i, FILE_PATH in enumerate(FILE_PATHS):
+                if FILE_PATH[i][1]:
+                    FILES_TOTAL += 1
+                    BYTES_TOTAL += getsize(FILE_PATH[i][0])
+        return FILE_PATHS, FILES_TOTAL, BYTES_TOTAL
     except BaseException as ERROR:
         raise Exception(f'[{ERROR.__class__.__name__ if str(ERROR).strip() else 'UnknownError'}]\nFunction: "recursive_files_and_bytes_total()"\n{ERROR if str(ERROR).strip() else 'An unknown error occurred!'}')
 
 #THIS FUNCTION:
 #1.) REQUIRES A BYTES NUMBER STRING OR INTEGER
 #2.) CONVERTS THE SUPPLIED BYTES NUMBER
-#3.) RETURNS THE CONVERTED BYTES AS A STRING
+#3.) RETURNS A CONVERTED BYTES STRING
 def convert_bytes(BYTES_NUMBER):
     if not isinstance(BYTES_NUMBER, (str, int)):
         raise TypeError('[TypeError]\nFunction: "convert_bytes()"\nThe bytes number parameter must be a string or integer type.')
     try:
         BINARY_INCREMENT = 1024
-        if BYTES_NUMBER < BINARY_INCREMENT:return f'{BYTES_NUMBER} Bytes'
+        if BYTES_NUMBER < BINARY_INCREMENT:return f'{BYTES_NUMBER} B'
         KILOBYTES = f'{round(BYTES_NUMBER/BINARY_INCREMENT, 2)}'
         if BYTES_NUMBER >= BINARY_INCREMENT and BYTES_NUMBER < BINARY_INCREMENT ** 2:return f'{KILOBYTES} KB'
         MEGABYTES = round(BYTES_NUMBER/(BINARY_INCREMENT ** 2), 2)
@@ -231,31 +230,26 @@ def convert_bytes(BYTES_NUMBER):
     except BaseException as ERROR:
         raise Exception(f'[{ERROR.__class__.__name__ if str(ERROR).strip() else 'UnknownError'}]\nFunction: "convert_bytes()"\n{ERROR if str(ERROR).strip() else 'An unknown error occurred!'}')
     
-#CONVERTS SECONDS TO FULL TIME FORMAT
+#THIS FUNCTION:
+#1.) REQUIRES A SECONDS NUMBER STRING OR INTEGER
+#2.) CONVERTS THE SUPPLIED SECONDS NUMBER
+#3.) RETURNS A CONVERTED SECONDS STRING
 def convert_seconds(SECONDS):
-    SECONDS = str(SECONDS).strip()
-    if SECONDS:
-        if SECONDS.isnumeric():
-            SECONDS = int(SECONDS)
-            YEARS = f'{SECONDS // 31536000}y:' if (SECONDS // 31536000) > 0 else ''
-            REMAINDER_SECONDS = SECONDS % 31536000
-            MONTHS = f'{REMAINDER_SECONDS // 2628000}M:' if (REMAINDER_SECONDS // 2628000) > 0 else ''
-            REMAINDER_SECONDS %= 2628000
-            WEEKS = f'{REMAINDER_SECONDS // 604800}w:' if (REMAINDER_SECONDS // 604800) > 0 else ''
-            REMAINDER_SECONDS %= 604800
-            DAYS = f'{REMAINDER_SECONDS // 86400}d:' if (REMAINDER_SECONDS // 86400) > 0 else ''
-            REMAINDER_SECONDS %= 86400
-            HOURS = f'{REMAINDER_SECONDS // 3600}h:' if (REMAINDER_SECONDS // 3600) > 0 else ''
-            REMAINDER_SECONDS %= 3600
-            MINUTES = f'{REMAINDER_SECONDS // 60}m:' if (REMAINDER_SECONDS // 60) > 0 else ''
-            REMAINDER_SECONDS %= 60
-            SECONDS = f'{REMAINDER_SECONDS % 60}s'
-            CONVERTED_SECONDS = f'{YEARS}{MONTHS}{WEEKS}{DAYS}{HOURS}{MINUTES}{SECONDS}'
-            return CONVERTED_SECONDS
-        else:
-            raise TypeError('"convert_seconds()":\nThe "SECONDS" variable, must be an integer')
-    else:
-        raise EOFError('"convert_seconds()":\nThe "SECONDS" variable, cannot be empty')
+    if not isinstance(BYTES_NUMBER, (str, int)):
+        raise TypeError('[TypeError]\nFunction: "convert_seconds()"\nThe seconds number parameter must be a string or integer type.')
+    try:
+        SECONDS = int(SECONDS)
+        YEARS = f'{SECONDS // 31536000}y:' if (SECONDS // 31536000) > 0 else ''; REMAINDER_SECONDS = SECONDS % 31536000
+        MONTHS = f'{REMAINDER_SECONDS // 2628000}M:' if (REMAINDER_SECONDS // 2628000) > 0 else ''; REMAINDER_SECONDS %= 2628000
+        WEEKS = f'{REMAINDER_SECONDS // 604800}w:' if (REMAINDER_SECONDS // 604800) > 0 else ''; REMAINDER_SECONDS %= 604800
+        DAYS = f'{REMAINDER_SECONDS // 86400}d:' if (REMAINDER_SECONDS // 86400) > 0 else ''; REMAINDER_SECONDS %= 86400
+        HOURS = f'{REMAINDER_SECONDS // 3600}h:' if (REMAINDER_SECONDS // 3600) > 0 else ''; REMAINDER_SECONDS %= 3600
+        MINUTES = f'{REMAINDER_SECONDS // 60}m:' if (REMAINDER_SECONDS // 60) > 0 else ''; REMAINDER_SECONDS %= 60
+        SECONDS = f'{REMAINDER_SECONDS % 60}s'
+        CONVERTED_SECONDS = f'{YEARS}{MONTHS}{WEEKS}{DAYS}{HOURS}{MINUTES}{SECONDS}'
+        return CONVERTED_SECONDS
+    except BaseException as ERROR:
+        raise Exception(f'[{ERROR.__class__.__name__ if str(ERROR).strip() else 'UnknownError'}]\nFunction: "convert_bytes()"\n{ERROR if str(ERROR).strip() else 'An unknown error occurred!'}')
     
 #DISPLAY A PROGRESS BAR, FOR THE "recursive_copy_with_progress()" FUNCTION   
 def recursive_copy_progress_bar(COPIED_BYTES, TOTAL_BYTES, ETA_SECONDS, LENGTH = 30):
