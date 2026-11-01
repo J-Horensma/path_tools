@@ -1,29 +1,12 @@
 import os, sys, platform, time
+from os.path import expandvars
 from pathlib import Path
 
 '''FUNCTIONS WILL BE REPLACED WITH UPGRADED ONES'''
 
-#STRIPS, EXPANDS VARIABLES, OS-NORMALIZES SLASHES, AND CONVERTS DOT-SEQUENCES, FROM THE SUPPLIED PATH
-def filter_path(PATH):
-    PATH = PATH.strip()
-    if PATH:
-        if isinstance(PATH, str):
-            PATH = appropriate_quotes(PATH)
-            PATH = unquote_path(PATH)
-            PATHLIB_PATH = str(Path.cwd())
-            PATH = os.path.expandvars(PATH)
-            RESOLVED = str(Path(PATH).resolve(strict=False))
-            STRIP_LENGTH = 0 if len(PATHLIB_PATH) == 0 else len(PATHLIB_PATH) + 1
-            if not os.path.isabs(PATH) and RESOLVED.lower().startswith(PATHLIB_PATH.lower()):
-                PATH = RESOLVED[STRIP_LENGTH:]
-            else:
-                PATH = RESOLVED
-            return PATH
-        else:
-            raise TypeError('"filter_path()":\nThe "PATH" variable, must be a string')
-    else:
-        raise EOFError('"filter_path()":\nThe "PATH" variable, cannot be empty')
-
+def convert_path(PATH):
+    return str(Path(expandvars(PATH.strip())).resolve(strict=False))
+    
 #RECURSIVELY COPIES A SUPPLIED SOURCE PATH, TO A SUPPLIED DESTINATION PATH,
 #WHILE SKIPPING FILES THAT CANNOT BE COPIED, LIKE HIDDEN AND SYM-LINK FILES
 def recursive_copy_with_progress(SOURCE_PATH, DESTINATION_PATH):
