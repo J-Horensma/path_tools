@@ -1,4 +1,4 @@
-# path_tools
+# path_tools (Upgrades In Progress)
 The "path_tools" library, is a multi-OS compatible python library, that includes advanced path-related functions.
 
 ## **The "is_safely_quoted()" Function:**
