@@ -1,11 +1,10 @@
-import os, sys, platform, time
 from os.path import expandvars
 from pathlib import Path
 
 '''FUNCTIONS WILL BE REPLACED WITH UPGRADED ONES'''
 
 def convert_path(PATH):
-    return str(Path(expandvars(PATH.strip())).resolve(strict=False))
+    return Path(expandvars(PATH.strip())).resolve(strict=False)
     
 #RECURSIVELY COPIES A SUPPLIED SOURCE PATH, TO A SUPPLIED DESTINATION PATH,
 #WHILE SKIPPING FILES THAT CANNOT BE COPIED, LIKE HIDDEN AND SYM-LINK FILES
